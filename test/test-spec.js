@@ -22,3 +22,13 @@ s3.getObject = (params, cb) => {
 }
 
 spec('s3', createStore(s3, 'ledger.test'))
+
+const test = require('tap').test
+
+test('s3: missing API', async t => {
+  t.plan(2)
+  let store = createStore(s3, 'ledger.test')
+  let key = await store.set(Buffer.from('asdf'))
+  t.same(await store.missing(['asdf']), ['asdf'])
+  t.same(await store.missing([key]), [])
+})
