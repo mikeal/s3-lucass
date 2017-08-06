@@ -32,3 +32,12 @@ test('s3: missing API', async t => {
   t.same(await store.missing(['asdf']), ['asdf'])
   t.same(await store.missing([key]), [])
 })
+
+test('s3: missing API w/o', async t => {
+  t.plan(2)
+  let store = createStore(s3, 'ledger.test')
+  let key = await store.set(Buffer.from('asdfaksdflkasjdfklajsldfkj'))
+  store._cache = new Set()
+  t.same(await store.missing(['asdf']), ['asdf'])
+  t.same(await store.missing([key]), [])
+})
