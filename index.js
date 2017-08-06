@@ -56,7 +56,7 @@ class S3Lucass {
   async missing (hashes) {
     let diff = Array.from(new Set(hashes.filter(h => !this._cache.has(h))))
     // TODO: headObject the remaining hashes.
-    let promises = diff.map(hash => this._head(diff))
+    let promises = diff.map(hash => this._head(hash))
     let results = await Promise.all(promises)
     let _missing = diff.filter(hash => !results.shift())
     return _missing
